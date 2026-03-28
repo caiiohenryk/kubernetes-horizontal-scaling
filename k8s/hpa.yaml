@@ -1,0 +1,18 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: scaling-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: scaling-app
+  minReplicas: 1
+  maxReplicas: 2 ## I'm using 2 as maxReplicas value to consume less resources in my test. But you can change this to whatever you prefer.
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
